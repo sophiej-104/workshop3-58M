@@ -55,7 +55,7 @@ sum_sq(tidy_chaff, mass, sex)
 
 ```{r summary function}
 
-summaryfunction <- function(df, measure, group) {
+data_summary <- function(df, measure, group) {
   df %>% group_by({{ group }}) %>%
     summarise(mean = mean(({{measure}})),
               n = length(({{measure}})),
@@ -63,7 +63,7 @@ summaryfunction <- function(df, measure, group) {
               se = sd(({{measure}} / length({{measure}}))))
 }
 
-summaryfunction(tidy_chaff, mass, sex)
+data_summary(tidy_chaff, mass, sex)
 ```
 # Discussion
 
