@@ -56,6 +56,12 @@ sum_sq(tidy_chaff, mass, sex)
 
 ```{r summarising}
 
+summary_chaff <- tidy_chaff %>%
+  group_by(sex) %>%
+  summarise(mean = mean(mass),
+            sd = sd(mass),
+            n = length(mass),
+            ss = sum_sq(., mass))
 
 ```
 
