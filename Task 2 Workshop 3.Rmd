@@ -56,6 +56,20 @@ sol2 <- sol %>% pivot_longer(names_to = "lineage_rep",
                              values_to = "abundance",
                              cols = starts_with("y"))
 
+#Create separate columns in `sol2` for the cell lineage and the replicate.
+sol2 <- sol2 %>%
+  extract(lineage_rep,
+          c("line", "rep"),
+          "(y[0-9]{3,4})\\_([a-c])")
+
+# write sol2 to file 
+
+file <-  "data/sol2.csv"
+write.table(sol2, 
+            file, 
+            quote = FALSE,
+            row.names = FALSE)
+
 ```
 
 # Results
