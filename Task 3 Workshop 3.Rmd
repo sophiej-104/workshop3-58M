@@ -1,0 +1,49 @@
+---
+title: "Task 3 Workshop 3"
+author: "Sophie Davies"
+date: "04/11/2020"
+output: html_document
+---
+
+# Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, 
+                      warning = FALSE, fig.retina = 3)
+```
+
+```{r packages}
+library(tidyverse)
+```
+
+# Methods
+
+```{r importing data}
+
+# define file name
+filesol <- "data-raw/Y101_Y102_Y201_Y202_Y101-5.csv"
+
+# skip first two lines
+sol <- read_csv(filesol, skip = 2) %>% 
+  janitor::clean_names()
+
+```
+
+```{r tidying data}
+
+# filter out the bovine proteins and those proteins identified from fewer than 2 peptides
+
+sol <- sol %>% 
+  filter(str_detect(description, "OS=Homo sapiens")) %>% 
+  filter(x1pep == "x")
+
+# Extract the genename from the description and put it in a column.
+
+sol <- sol %>%
+  mutate(genename =  str_extract(description,"GN=[^\\s]+") %>% 
+           str_replace("GN=", ""))
+
+```
+
+# Results
+
