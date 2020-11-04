@@ -5,23 +5,40 @@ date: "04/11/2020"
 output: html_document
 ---
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE,
                       message = FALSE, fig.retina = 3)
 ```
 
-
 ```{r packages}
 library(tidyverse)
+```
 
+```{r importing data}
+# reading in the chaff.txt data
+chaff <- read.table("data-raw/chaff.txt", header = TRUE)
+
+# reformatting the data into tidy format and writing to file
+tidy_chaff <- chaff %>%
+  pivot_longer(names_to = "sex", 
+               values_to = "mass",
+               cols = everything())
+
+file <-  "data/tidy_chaff.txt"
+write.table(tidy_chaff, 
+            file, 
+            quote = FALSE,
+            row.names = FALSE)
 ```
 
 
 # Introduction
 
+Investigation into the masses of male and female chaffinches.
+
 # Methods
+
+Importing and summarising the data from chaff.txt. 
 
 # Results
 
