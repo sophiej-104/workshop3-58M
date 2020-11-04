@@ -1,5 +1,5 @@
 ---
-title: "Task 3 Workshop 3"
+title: "Task 2 Workshop 3"
 author: "Sophie Davies"
 date: "04/11/2020"
 output: html_document
@@ -37,11 +37,24 @@ sol <- sol %>%
   filter(str_detect(description, "OS=Homo sapiens")) %>% 
   filter(x1pep == "x")
 
-# Extract the genename from the description and put it in a column.
+# extract the genename from the description and put it in a column.
 
 sol <- sol %>%
   mutate(genename =  str_extract(description,"GN=[^\\s]+") %>% 
            str_replace("GN=", ""))
+
+# extract the top protein identifier from the accession column and put it in a column called protid.
+# the top protein identifier is the first Uniprot ID after the “1::” in the accession column.
+
+sol <- sol %>%
+  mutate(protid = str_extract(accession, "1::[^\\s]+") %>%
+           str_replace("1::", ""))
+
+# Create a second dataframe, sol2 in which the protein abundances are in a single column, abundance and the cell lineage and replicate, lineage_rep, is indicated in another. All the other variables should also be in the new data frame.
+
+sol2 <- sol %>% pivot_longer(names_to = "lineage_rep",
+                             values_to = "abundance",
+                             cols = starts_with("y"))
 
 ```
 
